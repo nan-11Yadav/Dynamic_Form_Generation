@@ -38,9 +38,7 @@ const JsonEditor: React.FC<JsonEditorProps> = ({ onSchemaChange }) => {
     setJson(value);
 
     try {
-      const parsed = JSON.parse(value) as Schema; // Assert that the parsed object is of type Schema
-
-      // Validate the structure of the parsed object (extra runtime check)
+      const parsed = JSON.parse(value) as Schema;
       if (
         typeof parsed.formTitle === "string" &&
         typeof parsed.formDescription === "string" &&
@@ -54,26 +52,25 @@ const JsonEditor: React.FC<JsonEditorProps> = ({ onSchemaChange }) => {
             )
         )
       ) {
-        onSchemaChange(parsed); // If validation passes, update the schema
+        onSchemaChange(parsed);
         setError(null);
       } else {
         throw new Error("JSON does not match the required schema format.");
       }
     } catch (err: unknown) {
-      // Check if the error is an instance of Error
       if (err instanceof Error) {
-        setError(err.message); // Display the error message
+        setError(err.message);
       } else {
-        setError("An unknown error occurred."); // Default message if error is not an instance of Error
+        setError("An unknown error occurred."); 
       }
-      onSchemaChange(null); // Reset schema if invalid JSON is entered
+      onSchemaChange(null);
     }
   };
 
   const handleInput = () => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto"; // Reset height to auto to shrink if needed
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set to scrollHeight to expand
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; 
     }
   };
 
