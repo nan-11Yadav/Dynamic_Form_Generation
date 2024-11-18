@@ -82,7 +82,7 @@ const JsonEditor: React.FC<JsonEditorProps> = ({ onSchemaChange }) => {
       </h2>
       <textarea
         ref={textareaRef}
-        className="w-full min-h-[400px] max-h-[860px] overflow-y-auto p-2 border rounded-md"
+        className="w-full min-h-[400px] max-h-[860px] overflow-y-auto p-2 border border-gray-200 rounded-md"
         value={json}
         onChange={handleChange}
         onInput={handleInput}

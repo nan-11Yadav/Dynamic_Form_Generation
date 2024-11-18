@@ -53,7 +53,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({ schema }) => {
 
   if (!schema)
     return (
-      <div className="flex justify-center items-center h-[400px] mt-12 border-2 text-center rounded-lg">
+      <div className="flex justify-center items-center h-[400px] mt-12 border-2 border-gray-200 text-center rounded-lg">
         Awaiting valid JSON schema...
       </div>
     );
@@ -62,7 +62,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({ schema }) => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col lg:p-4 p-6 border-2 mt-9 rounded-lg"
+        className="flex flex-col lg:p-4 p-6 border-2 border-gray-200 mt-9 rounded-lg"
       >
         <p className="justify-center text-center lg:text-3xl text-2xl font-semibold mb-4">
           Design Using JSON Data
@@ -83,14 +83,14 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({ schema }) => {
                 })}
                 type={field.type}
                 placeholder={field.placeholder}
-                className="w-full p-2 border rounded-md"
+                className="w-full p-2 border rounded-md border-gray-200"
               />
             ) : field.type === "select" && field.options ? (
               <select
                 {...register(field.id, {
                   required: field.required ? "This field is required" : false,
                 })}
-                className="w-full p-2 border rounded-md"
+                className="w-full p-2 border rounded-md border-gray-200"
               >
                 {field.options.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -123,7 +123,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({ schema }) => {
                 })}
                 placeholder={field.placeholder}
                 rows={4}
-                className="w-full p-2 border rounded-md"
+                className="w-full p-2 border border-gray-200 rounded-md"
               />
             ) : null}
             {errors[field.id]?.message && (
