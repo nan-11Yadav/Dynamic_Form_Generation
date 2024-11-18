@@ -1,4 +1,14 @@
-/* src/styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    --background: #ffffff;
+    --foreground: #000000;
+  }
+  .dark html {
+    --background: #1a202c;
+    --foreground: #f7fafc;
+  }
+}

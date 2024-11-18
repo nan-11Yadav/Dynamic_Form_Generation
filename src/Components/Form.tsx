@@ -35,10 +35,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({ schema }) => {
     formState: { errors },
   } = useForm<Record<string, string>>();
   const [showModal, setShowModal] = useState(false);
-  const [submittedData, setSubmittedData] = useState<Record<
-    string,
-    string
-  > | null>(null);
+  const [submittedData, setSubmittedData] = useState<Record<string, string> | null>(null);
 
   const onSubmit = (data: Record<string, string>) => {
     console.log("Form Submitted:", data);
@@ -51,6 +48,13 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({ schema }) => {
     setSubmittedData(null);
   };
 
+  const handleCopyJson = () => {
+    if (schema) {
+      navigator.clipboard.writeText(JSON.stringify(schema, null, 2));
+      alert("Form JSON copied to clipboard!");
+    }
+  };
+
   if (!schema)
     return (
       <div className="flex justify-center items-center h-[400px] mt-12 border-2 border-gray-200 text-center rounded-lg">
@@ -60,89 +64,99 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({ schema }) => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col lg:p-4 p-6 border-2 border-gray-200 mt-9 rounded-lg"
-      >
-        <p className="justify-center text-center lg:text-3xl text-2xl font-semibold mb-4">
-          Design Using JSON Data
-        </p>
-        <h2 className="text-lg font-semibold mb-2">{schema.formTitle}</h2>
-        <p className="text-gray-600 mb-4">{schema.formDescription}</p>
-
-        {schema.fields.map((field) => (
-          <div key={field.id} className="my-4">
-            <label className="block mb-1">{field.label}</label>
-            {field.type === "text" || field.type === "email" ? (
-              <input
-                {...register(field.id, {
-                  required: field.required ? "This field is required" : false,
-                  pattern: field.validation?.pattern
-                    ? new RegExp(field.validation.pattern)
-                    : undefined,
-                })}
-                type={field.type}
-                placeholder={field.placeholder}
-                className="w-full p-2 border rounded-md border-gray-200"
-              />
-            ) : field.type === "select" && field.options ? (
-              <select
-                {...register(field.id, {
-                  required: field.required ? "This field is required" : false,
-                })}
-                className="w-full p-2 border rounded-md border-gray-200"
-              >
-                {field.options.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            ) : field.type === "radio" && field.options ? (
-              <div className="flex lg:flex-row flex-col gap-2">
-                {field.options.map((option) => (
-                  <label key={option.value} className="flex items-center">
-                    <input
-                      {...register(field.id, {
-                        required: field.required
-                          ? "This field is required"
-                          : false,
-                      })}
-                      type="radio"
-                      value={option.value}
-                      className="mr-2"
-                    />
-                    {option.label}
-                  </label>
-                ))}
-              </div>
-            ) : field.type === "textarea" ? (
-              <textarea
-                {...register(field.id, {
-                  required: field.required ? "This field is required" : false,
-                })}
-                placeholder={field.placeholder}
-                rows={4}
-                className="w-full p-2 border border-gray-200 rounded-md"
-              />
-            ) : null}
-            {errors[field.id]?.message && (
-              <p className="text-red-500 text-sm">
-                {String(errors[field.id]?.message)}
-              </p>
-            )}
-          </div>
-        ))}
-
-        <button
-          type="submit"
-          className="p-2 mt-4 bg-blue-500 text-white rounded-md"
+      <div className="p-6 bg-white text-black">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col lg:p-4 p-6 border-2 border-gray-200 mt-9 rounded-lg"
         >
-          Submit
-        </button>
-      </form>
+          <p className="justify-center text-center lg:text-3xl text-2xl font-semibold mb-4">
+            Design Using JSON Data
+          </p>
+          <h2 className="text-lg font-semibold mb-2">{schema.formTitle}</h2>
+          <p className="text-gray-600 mb-4">{schema.formDescription}</p>
 
-      {/* Popup Modal */}
+          {schema.fields.map((field) => (
+            <div key={field.id} className="my-4">
+              <label className="block mb-1">{field.label}</label>
+              {field.type === "text" || field.type === "email" ? (
+                <input
+                  {...register(field.id, {
+                    required: field.required ? "This field is required" : false,
+                    pattern: field.validation?.pattern
+                      ? new RegExp(field.validation.pattern)
+                      : undefined,
+                  })}
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  className="w-full p-2 border rounded-md border-gray-200"
+                />
+              ) : field.type === "select" && field.options ? (
+                <select
+                  {...register(field.id, {
+                    required: field.required ? "This field is required" : false,
+                  })}
+                  className="w-full p-2 border rounded-md border-gray-200"
+                >
+                  {field.options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              ) : field.type === "radio" && field.options ? (
+                <div className="flex lg:flex-row flex-col gap-2">
+                  {field.options.map((option) => (
+                    <label key={option.value} className="flex items-center">
+                      <input
+                        {...register(field.id, {
+                          required: field.required
+                            ? "This field is required"
+                            : false,
+                        })}
+                        type="radio"
+                        value={option.value}
+                        className="mr-2"
+                      />
+                      {option.label}
+                    </label>
+                  ))}
+                </div>
+              ) : field.type === "textarea" ? (
+                <textarea
+                  {...register(field.id, {
+                    required: field.required ? "This field is required" : false,
+                  })}
+                  placeholder={field.placeholder}
+                  rows={4}
+                  className="w-full p-2 border border-gray-200 rounded-md"
+                />
+              ) : null}
+              {errors[field.id]?.message && (
+                <p className="text-red-500 text-sm">
+                  {String(errors[field.id]?.message)}
+                </p>
+              )}
+            </div>
+          ))}
+
+          <button
+            type="submit"
+            className="p-2 mt-4 bg-blue-500 text-white rounded-md"
+          >
+            Submit
+          </button>
+        </form>
+
+        <div className="mt-4 flex justify-between">
+          <button
+            onClick={handleCopyJson}
+            className="p-2 bg-green-500 text-white rounded-md"
+          >
+            Copy Form JSON
+          </button>
+        </div>
+      </div>
+
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">

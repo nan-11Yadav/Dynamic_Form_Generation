@@ -49,7 +49,9 @@ const JsonEditor: React.FC<JsonEditorProps> = ({ onSchemaChange }) => {
           (field) =>
             typeof field.id === "string" &&
             typeof field.label === "string" &&
-            ["text", "email", "select", "radio", "textarea"].includes(field.type)
+            ["text", "email", "select", "radio", "textarea"].includes(
+              field.type
+            )
         )
       ) {
         onSchemaChange(parsed); // If validation passes, update the schema
@@ -75,6 +77,21 @@ const JsonEditor: React.FC<JsonEditorProps> = ({ onSchemaChange }) => {
     }
   };
 
+  const handleDownloadJson = () => {
+    try {
+      const blob = new Blob([json], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "form-schema.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading JSON: ", error);
+      alert("An error occurred while downloading the JSON.");
+    }
+  };
+
   return (
     <div className="flex flex-col p-4">
       <h2 className="text-lg font-semibold justify-center mb-4 text-center">
@@ -89,6 +106,13 @@ const JsonEditor: React.FC<JsonEditorProps> = ({ onSchemaChange }) => {
         placeholder="Paste your JSON schema here..."
       />
       {error && <p className="text-red-500">{error}</p>}
+
+      <button
+        onClick={handleDownloadJson}
+        className="mt-4 p-2 bg-blue-500 text-white rounded-md"
+      >
+        Download JSON
+      </button>
     </div>
   );
 };
