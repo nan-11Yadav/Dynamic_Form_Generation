@@ -1,7 +1,7 @@
 "use client";
 
-import FormGenerator from "@/Components/Form";
-import JsonEditor from "@/Components/JsonEditor";
+import FormGenerator from "@/Components/Formdata";
+import JsonEditor from "@/Components/Editor";
 import React, { useState, useEffect } from "react";
 
 interface FieldOption {
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="lg:p-6 sm:p-2 p-6 bg-white text-black dark:bg-gray-800 dark:text-black">
-      <h2 className="flex justify-center lg:mt-4 sm:mt-9 font-extrabold mb-4 underline text-center lg:text-5xl sm:text-3xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+      <h2 className="flex justify-center lg:mt-4 sm:mt-9 font-extrabold mb-4  text-center lg:text-5xl sm:text-3xl bg-gradient-to-r from-red-500 via-green-500 to-blue-500 text-transparent bg-clip-text">
         Dynamic Form Generator Challenge
       </h2>
 

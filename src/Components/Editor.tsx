@@ -106,7 +106,7 @@ const JsonEditor: React.FC<JsonEditorProps> = ({ onSchemaChange }) => {
 
       <button
         onClick={handleDownloadJson}
-        className="mt-4 p-2 bg-blue-500 text-white rounded-md"
+        className="mt-4 p-2 bg-pink-500 w-1/2 text-white rounded-md"
       >
         Download JSON
       </button>

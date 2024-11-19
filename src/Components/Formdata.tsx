@@ -141,7 +141,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({ schema }) => {
 
           <button
             type="submit"
-            className="p-2 mt-4 bg-blue-500 text-white rounded-md"
+            className="p-2 mt-4 bg-pink-500 text-white rounded-md"
           >
             Submit
           </button>
@@ -150,7 +150,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({ schema }) => {
         <div className="mt-4 flex justify-between">
           <button
             onClick={handleCopyJson}
-            className="p-2 bg-green-500 text-white rounded-md"
+            className="p-2 bg-pink-500 text-white rounded-md"
           >
             Copy Form JSON
           </button>
